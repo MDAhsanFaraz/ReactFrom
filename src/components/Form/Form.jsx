@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import validatePassword from "../../helper/passwordValidator";
 import validateEmail from "../../helper/emailValidator";
 
 import "./Form.css";
 
 function Form() {
+  const exampleRef = useRef(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log(exampleRef);
+  }),
+    [count];
+
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
@@ -32,10 +40,14 @@ function Form() {
 
   return (
     <div>
-      new Form
+      new Form Count:{count}
+      Exampleref:{exampleRef.current}
+      <button onClick={() => setCount(count + 1)}>update count</button>
+      <button onClick={() => exampleRef.current++}>update ref</button>
       <form onSubmit={handleFormSubmits}>
         <div className="wrapper email-input-wrapper">
           <input
+            id="email-input"
             type="email"
             value={formValues.email}
             onChange={(event) => {
@@ -45,6 +57,7 @@ function Form() {
         </div>
         <div className="wrapper password-input-wrapper">
           <input
+            id="password-input"
             type="password"
             value={formValues.password}
             onChange={(event) => {
